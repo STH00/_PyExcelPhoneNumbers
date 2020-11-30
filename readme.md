@@ -9,7 +9,7 @@ e.g. missing initials, misspellings, middle name variation.
   
 # To do
 .~~Threading~~  
-.~~Progress Bar~~
+.~~Progress Bar~~  
 .Match Threshold Input  
 .Phone number format options  
 .GUI change  
