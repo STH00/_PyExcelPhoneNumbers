@@ -15,5 +15,5 @@ e.g. missing initials, misspellings, middle name variation.
 .GUI change  
 .Verbose change logging or cell coloring  
 .Strip and clean phone numbers  
-.Exception handling
-.Textbox, Combobox, Progressbar reset
+.Exception handling  
+.Textbox, Combobox, Progressbar reset  
