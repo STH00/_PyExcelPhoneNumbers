@@ -8,11 +8,12 @@ This app uses the fuzzy wuzzy library to match similar names between sources
 e.g. missing initials, misspellings, middle name variation.  
   
 # To do
-.Threading  
-.Progress Bar  
+.~~Threading~~  
+.~~Progress Bar~~
 .Match Threshold Input  
 .Phone number format options  
 .GUI change  
 .Verbose change logging or cell coloring  
-.Strip and clean phone numbers better  
-.Exception handling  
+.Strip and clean phone numbers  
+.Exception handling
+.Textbox, Combobox, Progressbar reset

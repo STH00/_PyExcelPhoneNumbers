@@ -38,11 +38,14 @@ def destroy_window():
     top_level.destroy()
     top_level = None
 
+
+
 # Primary File button action classed to clone function easily
 # Separate class/function to keep dataframe loaded, prevent variable issues
 class PrimaryFile:
     def ComboboxUpdate(self, TextBox, ComboboxName, ComboboxPhone):
         TextBox.delete("1.0", "end")
+
         file = tk.filedialog.askopenfilename(title="Select A File",filetypes=(("Excel File", "*.xlsx"),("All Files", "*.*")))
         TextBox.insert(tk.INSERT,file)
         filepath = (TextBox.get("1.0", "end")).rstrip()
@@ -62,9 +65,9 @@ class PrimaryFile:
 # New File button action classed to clone function easily
 # Separate class/function to keep dataframe loaded, prevent variable issues
 class NewFile:
-    def ComboboxUpdate(self, TextBox, ComboboxName, ComboboxPhone):
-        # Clear file 
+    def ComboboxUpdate(self, TextBox, ComboboxName, ComboboxPhone): 
         TextBox.delete("1.0", "end")
+
         file = tk.filedialog.askopenfilename(title="Select A File",filetypes=(("Excel File", "*.xlsx"),("All Files", "*.*")))
         TextBox.insert(tk.INSERT,file)
         filepath = (TextBox.get("1.0", "end")).rstrip()
@@ -84,7 +87,7 @@ class NewFile:
 # Run button action class
 # Separate class to prevent variable issues
 class RunEvent:
-    def ButtonRun_Click(self, primary_name, primary_phone, newinfo_name, newinfo_phone):
+    def ButtonRun_Click(self, primary_name, primary_phone, newinfo_name, newinfo_phone, progressbar):
         
         dfp = df_primary
         dfp = dfp.set_index(primary_name)
@@ -92,8 +95,13 @@ class RunEvent:
         dfn = df_newinfo
         dfn = dfn.set_index(newinfo_name)
 
+        progress_count = 0
 
         for pri_name in dfp.index:
+            progress_count += 1
+            progress_total = (progress_count / len(dfp.index)) * 100
+            progressbar['value'] = progress_total
+            print(progress_total)
             for new_name in dfn.index:
                 result = fuzz.token_set_ratio(str(pri_name), str(new_name))
                 
@@ -117,8 +125,8 @@ class RunEvent:
                         else:
                             print("**********\nBAD LENGTH MATCH: {}\n**********".format(strip_newphone))
                         
-
-
         # Output changes
-        export_file = tk.filedialog.asksaveasfilename(title="Save File",filetypes=(("Excel File", "*.xlsx"),("All Files", "*.*")))
-        dfp.to_excel (export_file, index = True, header = True)
+        # export_file = tk.filedialog.asksaveasfilename(title="Save File",filetypes=(("Excel File", "*.xlsx"),("All Files", "*.*")))
+        # dfp.to_excel (export_file, index = True, header = True)
+        export_file_path = tk.filedialog.asksaveasfilename(defaultextension='.xlsx')
+        dfp.to_excel (export_file_path, index = True, header=True)

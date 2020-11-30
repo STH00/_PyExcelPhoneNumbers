@@ -68,7 +68,6 @@ class Toplevel1:
 
         self.menubar = tk.Menu(top,font="TkMenuFont",bg=_bgcolor,fg=_fgcolor)
         top.configure(menu = self.menubar)
-    
 
         # Button to browse for primary file
         self.ButtonPrimaryFile = tk.Button(top)
@@ -76,7 +75,8 @@ class Toplevel1:
         self.ButtonPrimaryFile.configure(activebackground="#ececec")
         self.ButtonPrimaryFile.configure(activeforeground="#000000")
         self.ButtonPrimaryFile.configure(background="#d9d9d9")
-        self.ButtonPrimaryFile.configure(command=lambda: PrimaryFile.ComboboxUpdate(self, self.TextBoxPrimaryFile, self.ComboboxPriFileName, self.ComboboxPriFilePhone))
+        self.ButtonPrimaryFile.configure(command=lambda: PrimaryFile.ComboboxUpdate(self, self.TextBoxPrimaryFile,
+                                                            self.ComboboxPriFileName, self.ComboboxPriFilePhone))
         self.ButtonPrimaryFile.configure(disabledforeground="#a3a3a3")
         self.ButtonPrimaryFile.configure(foreground="#000000")
         self.ButtonPrimaryFile.configure(highlightbackground="#d9d9d9")
@@ -116,7 +116,8 @@ class Toplevel1:
         self.ButtonNewInfoFile.configure(activebackground="#ececec")
         self.ButtonNewInfoFile.configure(activeforeground="#000000")
         self.ButtonNewInfoFile.configure(background="#d9d9d9")
-        self.ButtonNewInfoFile.configure(command=lambda: NewFile.ComboboxUpdate(self, self.TextBoxNewInfoFile, self.ComboboxNewInfoName, self.ComboboxNewInfoFilePhone))
+        self.ButtonNewInfoFile.configure(command=lambda: NewFile.ComboboxUpdate(self,self.TextBoxNewInfoFile, 
+                                                            self.ComboboxNewInfoName, self.ComboboxNewInfoFilePhone))
         self.ButtonNewInfoFile.configure(disabledforeground="#a3a3a3")
         self.ButtonNewInfoFile.configure(foreground="#000000")
         self.ButtonNewInfoFile.configure(highlightbackground="#d9d9d9")
@@ -202,15 +203,23 @@ class Toplevel1:
 
         self.Progressbar = ttk.Progressbar(top)
         self.Progressbar.place(relx=0.073, rely=0.892, relwidth=0.561, relheight=0.0, height=22)
-        self.Progressbar.configure(length="230")
+        self.Progressbar.configure(length="230", mode='determinate')
 
-        # Button to execute
+        #Thread for run function
+        def threadbringer(self):
+            thread_run = threading.Thread(target=RunEvent.ButtonRun_Click, args=[self, self.ComboboxPriFileName.get(),
+                                            self.ComboboxPriFilePhone.get(), self.ComboboxNewInfoName.get(),
+                                            self.ComboboxNewInfoFilePhone.get(), self.Progressbar])
+            thread_run.daemon = True
+            thread_run.start()
+
+        # Button for run function
         self.ButtonRun = tk.Button(top)
         self.ButtonRun.place(relx=0.659, rely=0.892, height=24, width=107)
         self.ButtonRun.configure(activebackground="#ececec")
         self.ButtonRun.configure(activeforeground="#000000")
         self.ButtonRun.configure(background="#d9d9d9")
-        self.ButtonRun.configure(command=lambda: RunEvent.ButtonRun_Click(self, self.ComboboxPriFileName.get(), self.ComboboxPriFilePhone.get(), self.ComboboxNewInfoName.get(), self.ComboboxNewInfoFilePhone.get()))
+        self.ButtonRun.configure(command=lambda: threadbringer(self))
         self.ButtonRun.configure(cursor="fleur")
         self.ButtonRun.configure(disabledforeground="#a3a3a3")
         self.ButtonRun.configure(foreground="#000000")
